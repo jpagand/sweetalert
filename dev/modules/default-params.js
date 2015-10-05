@@ -5,11 +5,15 @@ var defaultParams = {
   allowOutsideClick: false,
   showConfirmButton: true,
   showCancelButton: false,
+  showThirdButton: false,
   closeOnConfirm: true,
+  closeOnThird: true,
   closeOnCancel: true,
   confirmButtonText: 'OK',
   confirmButtonColor: '#8CD4F5',
+  thirdButtonColor: '#8CD4F5',
   cancelButtonText: 'Cancel',
+  thirdButtonText: 'Third',
   imageUrl: null,
   imageSize: null,
   timer: null,
@@ -20,7 +24,8 @@ var defaultParams = {
   inputType: 'text',
   inputPlaceholder: '',
   inputValue: '',
-  showLoaderOnConfirm: false
+  showLoaderOnConfirm: false,
+  showLoaderOnThird: false
 };
 
 export default defaultParams;

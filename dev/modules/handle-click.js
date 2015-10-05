@@ -11,6 +11,7 @@ var handleButton = function(event, params, modal) {
   var target = e.target || e.srcElement;
 
   var targetedConfirm = target.className.indexOf('confirm') !== -1;
+  var targetedThird = target.className.indexOf('third') !== -1;
   var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
   var modalIsVisible  = hasClass(modal, 'visible');
   var doneFunctionExists = (params.doneFunction && modal.getAttribute('data-has-done-function') === 'true');
@@ -23,9 +24,17 @@ var handleButton = function(event, params, modal) {
     hoverColor   = colorLuminance(normalColor, -0.04);
     activeColor  = colorLuminance(normalColor, -0.14);
   }
+  if (targetedThird && params.thirdButtonColor) {
+    normalColor  = params.thirdButtonColor;
+    hoverColor   = colorLuminance(normalColor, -0.04);
+    activeColor  = colorLuminance(normalColor, -0.14);
+  }
 
   function shouldSetConfirmButtonColor(color) {
     if (targetedConfirm && params.confirmButtonColor) {
+      target.style.backgroundColor = color;
+    }
+    if (targetedThird && params.thirdButtonColor) {
       target.style.backgroundColor = color;
     }
   }
@@ -50,11 +59,17 @@ var handleButton = function(event, params, modal) {
     case 'focus':
       let $confirmButton = modal.querySelector('button.confirm');
       let $cancelButton  = modal.querySelector('button.cancel');
+      let $thirdButton  = modal.querySelector('button.third');
 
       if (targetedConfirm) {
         $cancelButton.style.boxShadow = 'none';
+        $thirdButton.style.boxShadow = 'none';
+      } else if (targetedThird) {
+        $cancelButton.style.boxShadow = 'none';
+        $confirmButton.style.boxShadow = 'none';
       } else {
         $confirmButton.style.boxShadow = 'none';
+        $thirdButton.style.boxShadow = 'none';
       }
       break;
 
@@ -69,6 +84,8 @@ var handleButton = function(event, params, modal) {
 
       if (targetedConfirm && doneFunctionExists && modalIsVisible) {
         handleConfirm(modal, params);
+      } else if (targetedThird && doneFunctionExists && modalIsVisible) {
+        handleThird(modal, params);
       } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
         handleCancel(modal, params);
       } else if (isDescendant(modal, target) && target.tagName === 'BUTTON') {
@@ -102,6 +119,27 @@ var handleConfirm = function(modal, params) {
     sweetAlert.disableButtons();
   }
 };
+var handleThird = function(modal, params) {
+  var callbackValue = 'third';
+
+  if (hasClass(modal, 'show-input')) {
+    callbackValue = modal.querySelector('input').value;
+
+    if (!callbackValue) {
+      callbackValue = '';
+    }
+  }
+
+  params.doneFunction(callbackValue);
+
+  if (params.closeOnThird) {
+    sweetAlert.close();
+  }
+  // Disable cancel and confirm button if the parameter is true
+  if (params.showLoaderOnThird) {
+    sweetAlert.disableButtons();
+  }
+};
 
 /*
  *  User clicked on "Cancel"
@@ -124,5 +162,6 @@ var handleCancel = function(modal, params) {
 export default {
   handleButton,
   handleConfirm,
-  handleCancel
+  handleCancel,
+  handleThird
 };

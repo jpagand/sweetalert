@@ -287,8 +287,10 @@ sweetAlert.disableButtons = swal.disableButtons = function(event) {
   var modal = getModal();
   var $confirmButton = modal.querySelector('button.confirm');
   var $cancelButton = modal.querySelector('button.cancel');
+  var $thirdButton = modal.querySelector('button.third');
   $confirmButton.disabled = true;
   $cancelButton.disabled = true;
+  $thirdButton.disabled = true;
 };
 
 /*
@@ -298,8 +300,10 @@ sweetAlert.enableButtons = swal.enableButtons = function(event) {
   var modal = getModal();
   var $confirmButton = modal.querySelector('button.confirm');
   var $cancelButton = modal.querySelector('button.cancel');
+  var $thirdButton = modal.querySelector('button.third');
   $confirmButton.disabled = false;
   $cancelButton.disabled = false;
+  $thirdButton.disabled = false;
 };
 
 if (typeof window !== 'undefined') {

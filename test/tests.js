@@ -77,6 +77,29 @@ test("cancel-button works", function(assert) {
     done();
   }, 500);
 });
+/*
+ * Make sure that when using { showThirdButton: true }:
+ * - The third-button is visible on the modal
+ * - Clicking on it dismisses the modal
+ */
+test("third-button works", function(assert) {
+  var done = assert.async();
+  swal({
+    title: "Test",
+    showThirdButton: true
+  });
+
+  var $modal = $('.sweet-alert');
+  var $thirdBtn = $modal.find('button.third');
+  ok($thirdBtn.is(':visible'));
+
+  $thirdBtn.click();
+
+  setTimeout(function() {
+    assert.ok($modal.is(':hidden'));
+    done();
+  }, 500);
+});
 
 // Clicking the overlay should not dismiss the modal...
 test("clicking the overlay does not dismiss modal", function(assert) {

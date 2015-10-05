@@ -26,6 +26,7 @@ var setParameters = function(params) {
   var $title = modal.querySelector('h2');
   var $text = modal.querySelector('p');
   var $cancelBtn = modal.querySelector('button.cancel');
+  var $thirdBtn = modal.querySelector('button.third');
   var $confirmBtn = modal.querySelector('button.confirm');
 
   /*
@@ -153,6 +154,14 @@ var setParameters = function(params) {
     $cancelBtn.style.display = 'inline-block';
   } else {
     hide($cancelBtn);
+  }/*
+   * Show third button?
+   */
+  modal.setAttribute('data-has-third-button', params.showThirdButton);
+  if (params.showThirdButton) {
+    $thirdBtn.style.display = 'inline-block';
+  } else {
+    hide($thirdBtn);
   }
 
   /*
@@ -171,6 +180,9 @@ var setParameters = function(params) {
   if (params.cancelButtonText) {
     $cancelBtn.innerHTML = escapeHtml(params.cancelButtonText);
   }
+  if (params.thirdButtonText) {
+    $thirdBtn.innerHTML = escapeHtml(params.thirdButtonText);
+  }
   if (params.confirmButtonText) {
     $confirmBtn.innerHTML = escapeHtml(params.confirmButtonText);
   }
@@ -188,6 +200,17 @@ var setParameters = function(params) {
 
     // Set box-shadow to default focused button
     setFocusStyle($confirmBtn, params.confirmButtonColor);
+  }
+  if (params.thirdButtonColor) {
+    // Set confirm button to selected background color
+    $thirdBtn.style.backgroundColor = params.thirdButtonColor;
+
+    // Set the confirm button color to the loading ring
+    $thirdBtn.style.borderLeftColor = params.thirdLoadingButtonColor;
+    $thirdBtn.style.borderRightColor = params.thirdLoadingButtonColor;
+
+    // Set box-shadow to default focused button
+    setFocusStyle($thirdBtn, params.thirdButtonColor);
   }
 
   /*

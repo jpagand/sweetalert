@@ -8,6 +8,7 @@ var handleKeyDown = function(event, params, modal) {
 
   var $okButton     = modal.querySelector('button.confirm');
   var $cancelButton = modal.querySelector('button.cancel');
+  var $thirdlButton = modal.querySelector('button.third');
   var $modalButtons = modal.querySelectorAll('button[tabindex]');
 
 
